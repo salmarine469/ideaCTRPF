@@ -1,0 +1,23 @@
+name: CI
+
+on: pull_request
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: pablomk7/libctrpf:0.7.4
+
+    steps:
+    - name: clone libncsnd
+      run: git clone https://github.com/PabloMK7/libncsnd.git
+    - name: install libncsnd
+      run: cd libncsnd && make install
+    - uses: actions/checkout@v3
+    - run: make
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ideaCTRPF
+        path: ideaCTRPF.3gx

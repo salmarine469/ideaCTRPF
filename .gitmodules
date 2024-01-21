@@ -1,0 +1,3 @@
+[submodule "plugin-sender"]
+	path = plugin-sender
+	url = ../../HidegonSan/plugin-sender.git

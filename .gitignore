@@ -1,0 +1,7 @@
+/Build
+/.vscode
+/CTRPFData.bin
+*.3gx
+*.lnk
+.env
+*.lst
