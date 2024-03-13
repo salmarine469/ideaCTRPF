@@ -38,9 +38,11 @@ git clone --recursive git@github.com:salmarine469/ideaCTRPF.git
 
 #### 1. Compile plugin-sender-socket/main.cpp
 
-#### 2. run output
+#### 2. Run Update3gx entry in 3ds and select from your pc with socket
+
+#### 3. Run output
 
 ```bash
 g++ plugin-sender-socket/main.cpp
-./a.out {3ds's local ip} {3gx path}
+./a.out {3ds local ip} {3gx path}
 ```
