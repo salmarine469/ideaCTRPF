@@ -1,0 +1,9 @@
+# Base style is Google
+BasedOnStyle: Google
+
+# Force pointers to the type for C++
+DerivePointerAlignment: false
+PointerAlignment: Right
+
+# No column limit
+ColumnLimit: 0

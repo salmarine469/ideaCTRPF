@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -6,22 +7,18 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include <unistd.h>
 
-int main(int arg, char **argv)
-{
+int main(int arg, char **argv) {
   std::string ip;
   if (2 <= arg)
     ip = std::string(argv[1]);
-  else
-  {
+  else {
     std::cout << "Enter IP: ";
     std::cin >> ip;
   }
 
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  if (sockfd < 0)
-  {
+  if (sockfd < 0) {
     std::cout << "socket error\n";
     return 1;
   }
@@ -32,8 +29,7 @@ int main(int arg, char **argv)
   addr.sin_port = htons(5000);
   addr.sin_addr.s_addr = inet_addr(ip.c_str());
 
-  if (connect(sockfd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
-  {
+  if (connect(sockfd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
     std::cout << "connect error" << std::endl;
     return 1;
   }
@@ -42,15 +38,13 @@ int main(int arg, char **argv)
   std::string path;
   if (3 <= arg)
     path = std::string(argv[2]);
-  else
-  {
+  else {
     std::cout << "Enter path: ";
     std::cin >> path;
   }
 
   std::ifstream ifs(path, std::ios::binary);
-  if (!ifs)
-  {
+  if (!ifs) {
     std::cout << "File not found\n";
     return 1;
   }
