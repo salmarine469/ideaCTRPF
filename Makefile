@@ -39,7 +39,7 @@ ASFLAGS		:=	$(ARCH)
 LDFLAGS		:= -T $(TOPDIR)/3gx.ld $(ARCH) -Os -Wl,--gc-sections,--strip-discarded,--strip-debug
 
 LIBS		:= -lctrpf -lcurl -lmbedtls -lmbedcrypto -lmbedx509 -lminizip -lctru -lz -lm -llua5.1 -lncsnd
-LIBDIRS		:= 	$(CTRPFLIB) $(CTRULIB) $(PORTLIBS) $(DEVKITPRO)/libncsnd
+LIBDIRS		:= 	$(CTRPFLIB) $(CTRULIB) $(TOPDIR) $(PORTLIBS) $(DEVKITPRO)/libncsnd
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional

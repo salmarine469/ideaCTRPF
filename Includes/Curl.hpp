@@ -1,8 +1,8 @@
 #pragma once
 
-#include <curl/curl.h>
-
 #include <CTRPluginFramework.hpp>
+
+#include "curl/curl.h"
 
 namespace CTRPluginFramework {
 class Curl {
