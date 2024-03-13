@@ -228,10 +228,11 @@ void InitBuffers(void) {
   Result ret = RL_SUCCESS;
   if (System::IsCitra()) {
     socBuffer = (u32 *)aligned_alloc(0x1000, SOC_BUFFER_SIZE);
-    if (socBuffer)
-      ret = RL_SUCCESS;
+    if (!socBuffer)
+      ret = RL_FATAL;
   } else
     ret = svcControlMemoryUnsafe((u32 *)&socBuffer, SOC_BUFFER_ADDR, SOC_BUFFER_SIZE, MemOp(MEMOP_REGION_SYSTEM | MEMOP_ALLOC), MemPerm(MEMPERM_READ | MEMPERM_WRITE));
+
   if (R_FAILED(ret) || !socBuffer)
     OSD::Notify("alloc socBuffer failed");
   else {
@@ -266,7 +267,7 @@ void InitMenu(PluginMenu &menu) {
   *gameFolder += new MenuEntry("2048", nullptr, Game2048, "2048ゲーム\nB:exit\nX:reset");
   *gameFolder += new MenuEntry("3D", nullptr, threeD, "threeD3\nB:exit");
   menu += gameFolder;
-  menu += new MenuEntry("Test1", nullptr, Test1);
+  menu += new MenuEntry("Test1", Test1);
   menu += new MenuEntry("command", nullptr, Command, "コマンド");
   menu += new MenuEntry("pipes", Pipes, "パイプス\nstartで消せます");
   menu += new MenuEntry("Cube", nullptr, Cube, "キューブ\nCPadとCStickで回転,拡大,縮小できるよ\nBで終了");

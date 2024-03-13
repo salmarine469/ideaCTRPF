@@ -2,7 +2,14 @@
 
 namespace CTRPluginFramework {
 void Test1(MenuEntry *entry) {
-  System::IsCitra();
+  static ButtonEx button(OSD::GetBottomScreen(), "Test", 100, 100, 10, Color::White, Color::Red, Color(0xFF, 0xFF, 0xFF, 0x30), 8, 8);
+  button.Update();
+  button.Draw();
+  if (button.IsDown())
+    OSD::Notify("Button down");
+
+  if (button.IsReleased())
+    OSD::Notify("Button released");
 }
 
 void JPNotify(MenuEntry *entry) {
@@ -711,7 +718,7 @@ s32 DownloadScreen(void *arg) {
         load += "\uE027";
         break;
     }
-    DrawSysfontPlus(_arg->screen, load, 200 - OSD::GetTextWidth(true, load) / 2, 112, 0, 0, _arg->foreground, _arg->background, Color::White, true);
+    DrawSysfontPlus(_arg->screen, load, 200 - OSD::GetTextWidth(true, load) / 2, 120, 0, 0, _arg->foreground, _arg->background, Color::White, true, 0, 0);
     if (Process::IsPaused())
       OSD::SwapBuffers();
   }

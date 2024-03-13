@@ -17,6 +17,7 @@
 #include "ncsnd.h"
 #include "osdjp.hpp"
 #include "threeDGame.hpp"
+#include "ButtonEx.hpp"
 
 namespace CTRPluginFramework {
 enum BMP_SCREEN {
