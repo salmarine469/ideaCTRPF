@@ -38,7 +38,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++20 -Wno-psabi
 ASFLAGS		:=	$(ARCH)
 LDFLAGS		:= -T $(TOPDIR)/3gx.ld $(ARCH) -Os -Wl,--gc-sections,--strip-discarded,--strip-debug
 
-LIBS		:= -lctrpf -lcurl -lmbedtls -lmbedcrypto -lmbedx509 -lminizip -lctru -lz -lm -llua5.1 -lncsnd
+LIBS		:= -lctrpf -lcurl -lmbedtls -lmbedcrypto -lmbedx509 -lminizip -lctru -lz -lm -llua5.1 -lncsnd -lfreetype -lbz2 -lpng -lpng16
 LIBDIRS		:= 	$(CTRPFLIB) $(CTRULIB) $(TOPDIR) $(PORTLIBS) $(DEVKITPRO)/libncsnd
 
 #---------------------------------------------------------------------------------
@@ -63,7 +63,8 @@ export LD 		:= 	$(CXX)
 export OFILES	:=	$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I $(CURDIR)/$(dir) ) \
 					$(foreach dir,$(LIBDIRS),-I $(dir)/include) \
-					-I $(CURDIR)/$(BUILD)
+					$(foreach dir,$(LIBDIRS),-I $(dir)/include/freetype2) \
+					-I $(CURDIR)/$(BUILD) \
 
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L $(dir)/lib)
 
@@ -82,13 +83,6 @@ clean:
 	@rm -fr $(BUILD) $(OUTPUT).3gx $(OUTPUT).elf
 
 re: clean all
-
-send:
-ifeq ($(shell uname),Linux)
-	@python3 plugin-sender/send.py
-else
-	@python plugin-sender/send.py
-endif
 
 #---------------------------------------------------------------------------------
 

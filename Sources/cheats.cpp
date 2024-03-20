@@ -2,14 +2,8 @@
 
 namespace CTRPluginFramework {
 void Test1(MenuEntry *entry) {
-  static ButtonEx button(OSD::GetBottomScreen(), "Test", 100, 100, 10, Color::White, Color::Red, Color(0xFF, 0xFF, 0xFF, 0x30), 8, 8);
-  button.Update();
-  button.Draw();
-  if (button.IsDown())
-    OSD::Notify("Button down");
-
-  if (button.IsReleased())
-    OSD::Notify("Button released");
+  static CustomFont font("font.otf", 60);
+  font.Draw("こんにちは\nせかい", OSD::GetTopScreen(), 50, 100, Color::BlackGrey, Color(0, 0, 0, 0));
 }
 
 void JPNotify(MenuEntry *entry) {

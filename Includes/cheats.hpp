@@ -2,9 +2,11 @@
 
 #include <arpa/inet.h>
 
+#include "ButtonEx.hpp"
 #include "Command.hpp"
 #include "Convert.hpp"
 #include "Curl.hpp"
+#include "CustomFont.hpp"
 #include "Game2048.hpp"
 #include "JPKeyboard.hpp"
 #include "KaniCodes.hpp"
@@ -17,7 +19,6 @@
 #include "ncsnd.h"
 #include "osdjp.hpp"
 #include "threeDGame.hpp"
-#include "ButtonEx.hpp"
 
 namespace CTRPluginFramework {
 enum BMP_SCREEN {

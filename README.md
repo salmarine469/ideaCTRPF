@@ -13,6 +13,9 @@ libctrpf
 3ds-zlib
 3ds-liblua51
 libncsnd
+3ds-freetype
+3ds-libpng
+3ds-zlib
 ```
 
 ### Clone
@@ -29,7 +32,7 @@ git clone --recursive git@github.com:salmarine469/ideaCTRPF.git
 
 1. Make sure you have [devkitpro](https://devkitpro.org/wiki/Getting_Started) installed and working.
 2. Clone or download the repo and open a command prompt.
-3. Run `pacman -S libctrpf 3gxtool 3ds-mbedtls 3ds-zlib 3ds-liblua51` to install libraries.
+3. Run `pacman -S libctrpf 3gxtool 3ds-mbedtls 3ds-zlib 3ds-liblua51 3ds-freetype 3ds-libpng 3ds-zlib` to install libraries.
 4. Install [libncsnd](https://github.com/PabloMK7/libncsnd).
 5. Run `cd ideaCTRPF && make`
 
