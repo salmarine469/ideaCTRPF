@@ -17,9 +17,11 @@ CustomFont::CustomFont(const std::string &path, u32 size) {
   FT_Set_Pixel_Sizes(m_face, 0, size);
 }
 
-void CustomFont::Draw(const std::string &str, const Screen &scr, u32 posX, u32 posY, const Color &foreground, const Color &background) const {
+void CustomFont::Draw(const std::string &str, const Screen &scr, u32 posX, u32 posY, const Color &foreground, const Color &background) {
   u32 x = posX;
   u32 y = posY;
+  m_hasCache = true;
+  m_cache.clear();
 
   std::u32string utf32 = std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t>{}.from_bytes(str);
 
@@ -42,8 +44,12 @@ void CustomFont::Draw(const std::string &str, const Screen &scr, u32 posX, u32 p
 
     last_height = std::max(last_height, height);
 
-    if (background.a != 0)
+    if (background.a != 0) {
       scr.DrawRect(x, y, width, height, background);
+      for (unsigned int i = 0; i < width; i++)
+        for (unsigned int j = 0; j < height; j++)
+          m_cache.push_back({{i, j}, background});
+    }
 
     for (u32 i = 0; i < width; i++) {
       for (u32 j = 0; j < height; j++) {
@@ -51,6 +57,7 @@ void CustomFont::Draw(const std::string &str, const Screen &scr, u32 posX, u32 p
         if (!color)
           continue;
         scr.DrawPixel(x + i, y + j, foreground);
+        m_cache.push_back({{x + i - posX, y + j - posY}, foreground});
       }
     }
 
@@ -84,5 +91,10 @@ unsigned int CustomFont::GetHeight(const std::string &str) const {
     }
   }
   return height;
+}
+
+void CustomFont::DrawCached(const Screen &scr, u32 posX, u32 posY) const {
+  for (auto [pos, color] : m_cache)
+    scr.DrawPixel(posX + pos.x, posY + pos.y, color);
 }
 }  // namespace CTRPluginFramework

@@ -3,7 +3,12 @@
 namespace CTRPluginFramework {
 void Test1(MenuEntry *entry) {
   static CustomFont font("font.otf", 60);
-  if (font)
+  if (!font)
+    return;
+
+  if (font.HasCached())
+    font.DrawCached(OSD::GetTopScreen(), 50, 100);
+  else
     font.Draw("こんにちは\nせかい", OSD::GetTopScreen(), 50, 100, Color::BlackGrey);
 }
 
