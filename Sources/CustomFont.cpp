@@ -4,16 +4,12 @@ namespace CTRPluginFramework {
 CustomFont::CustomFont(const std::string &path, u32 size) {
   FT_Init_FreeType(&m_library);
   File fontFile(path, File::READ);
-  if (!fontFile.IsOpen()) {
-    MessageBox("Failed to open font file", DialogType::DialogOk);
+  if (!fontFile.IsOpen())
     return;
-  }
 
   m_font = std::make_unique<u8[]>(fontFile.GetSize());
-  if (!m_font) {
-    MessageBox("Failed to allocate memory for font", DialogType::DialogOk);
+  if (!m_font)
     return;
-  }
 
   fontFile.Read(m_font.get(), fontFile.GetSize());
 
@@ -60,5 +56,33 @@ void CustomFont::Draw(const std::string &str, const Screen &scr, u32 posX, u32 p
 
     x += width;
   }
+}
+
+unsigned int CustomFont::GetWidth(const std::string &str) const {
+  unsigned int width = 0;
+  std::u32string utf32 = std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t>{}.from_bytes(str);
+  for (auto c : utf32) {
+    auto error = FT_Load_Char(m_face, c, FT_LOAD_RENDER);
+    if (error)
+      continue;
+    width += m_face->glyph->bitmap.width;
+  }
+  return width;
+}
+
+unsigned int CustomFont::GetHeight(const std::string &str) const {
+  unsigned int height = 0, row = 0;
+  std::u32string utf32 = std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t>{}.from_bytes(str);
+  for (auto c : utf32) {
+    auto error = FT_Load_Char(m_face, c, FT_LOAD_RENDER);
+    if (error)
+      continue;
+    row = std::max(row, m_face->glyph->bitmap.rows);
+    if (c == '\n') {
+      height += row;
+      row = 0;
+    }
+  }
+  return height;
 }
 }  // namespace CTRPluginFramework
